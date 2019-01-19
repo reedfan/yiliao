@@ -4,6 +4,7 @@ import com.reed.ustc.common.CommonRet;
 import com.reed.ustc.pojo.TbUser;
 import com.reed.ustc.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,7 @@ public class LoginController {
     public ModelAndView reg( @RequestParam("username") String username,
                       @RequestParam("password") String password,
            //           @RequestParam("next") String next,
-                      @RequestParam(value="rememberme", defaultValue = "false") boolean rememberme,
+                @ApiParam("是否记住密码") @RequestParam(value="rememberme", defaultValue = "false") boolean rememberme,
                       HttpServletResponse response) {
         ModelAndView modelAndView = new ModelAndView();
         Map<String, Object> result = modelAndView.getModel();
