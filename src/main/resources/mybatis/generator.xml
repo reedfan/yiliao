@@ -50,9 +50,9 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
         <!-- 指定数据库表 -->
-        <table tableName="tb_user">
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+        <!--<table tableName="tb_user">-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
 
         <!--<table tableName="login_ticket">-->
             <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
@@ -63,5 +63,9 @@
          <!--<table schema="" tableName="user">
             <columnOverride column="birthday" javaType="Date" />
         </table>-->
+
+        <table tableName="patient">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
     </context>
 </generatorConfiguration>

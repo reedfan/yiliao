@@ -21,7 +21,7 @@ spring:
     encoding: UTF-8
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.101.47.253:3306/yiliao
+    url: jdbc:mysql://47.101.47.253:3306/yiliao?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: reedfan1991
   redis:
