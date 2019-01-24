@@ -1,5 +1,7 @@
 package com.reed.ustc.service.impl;
 
+import com.reed.ustc.common.RedisKeyEnum;
+import com.reed.ustc.config.RedisConfig;
 import com.reed.ustc.controller.LoginController;
 import com.reed.ustc.mapper.LoginTicketMapper;
 import com.reed.ustc.mapper.TbUserMapper;
@@ -7,6 +9,7 @@ import com.reed.ustc.pojo.LoginTicket;
 import com.reed.ustc.pojo.LoginTicketExample;
 import com.reed.ustc.pojo.TbUser;
 import com.reed.ustc.pojo.TbUserExample;
+import com.reed.ustc.service.RedisService;
 import com.reed.ustc.service.UserService;
 import com.reed.ustc.utils.WendaUtil;
 import org.apache.commons.lang.StringUtils;
@@ -36,6 +39,9 @@ public class UserServiceImpl implements UserService {
     LoginTicketMapper loginTicketMapper;
     LoginTicketExample loginTicketExample= null;
     LoginTicketExample.Criteria loginTicketCriteria = null;
+
+    @Autowired
+    private RedisConfig redisConfig;
 
     @Override
     public TbUser selctUserByName(String userName) {
@@ -152,15 +158,25 @@ public class UserServiceImpl implements UserService {
     }
 
     private String addLoginTicket(int userId) {
-        LoginTicket ticket = new LoginTicket();
-        ticket.setUserId(userId);
-        Date date = new Date();
-        date.setTime(date.getTime() + 1000*3600*24);
-        ticket.setExpired(date);
-        ticket.setStatus(0);
-        ticket.setTicket(UUID.randomUUID().toString().replaceAll("-", ""));
-         loginTicketMapper.insertSelective(ticket);
 
-         return ticket.getTicket();
+        String ticket = RedisKeyEnum.LOGIN_TiCKET+UUID.randomUUID().toString().replaceAll("-", "");
+
+        redisConfig.set(ticket,userId,3600*24);
+
+        return ticket;
+
+
+
+
+//        LoginTicket ticket = new LoginTicket();
+//        ticket.setUserId(userId);
+//        Date date = new Date();
+//        date.setTime(date.getTime() + 1000*3600*24);
+//        ticket.setExpired(date);
+//        ticket.setStatus(0);
+//        ticket.setTicket(UUID.randomUUID().toString().replaceAll("-", ""));
+//         loginTicketMapper.insertSelective(ticket);
+//
+//         return ticket.getTicket();
     }
 }

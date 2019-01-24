@@ -42,8 +42,9 @@ public class PatientController {
     }
 
     @ApiOperation(value = "获取病人基本信息")
-    @GetMapping("/get")
+    @GetMapping("/getp")
     public List<Patient> patientList(String patientName){
+        logger.info("sssssssssssssssssssss");
         List<Patient> patientList = new ArrayList<>();
 
         try {

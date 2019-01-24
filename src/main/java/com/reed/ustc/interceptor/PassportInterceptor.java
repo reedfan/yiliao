@@ -1,8 +1,10 @@
 package com.reed.ustc.interceptor;
 
+import com.reed.ustc.config.RedisConfig;
 import com.reed.ustc.pojo.HostHolder;
 import com.reed.ustc.pojo.LoginTicket;
 import com.reed.ustc.pojo.TbUser;
+import com.reed.ustc.service.RedisService;
 import com.reed.ustc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,6 +29,9 @@ public class PassportInterceptor implements HandlerInterceptor {
     @Autowired
     private HostHolder hostHolder;
 
+    @Autowired
+    private RedisConfig redisConfig;
+
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         String ticket = null;
@@ -39,13 +44,16 @@ public class PassportInterceptor implements HandlerInterceptor {
             }
         }
 
-        if (ticket != null) {
-            LoginTicket loginTicket = userService.selectLoginTicketByticket(ticket);
-            if (loginTicket == null || loginTicket.getExpired().before(new Date()) || loginTicket.getStatus() != 0) {
-                return true;
-            }
+//        if (ticket != null) {
+//            LoginTicket loginTicket = userService.selectLoginTicketByticket(ticket);
+//            if (loginTicket == null || loginTicket.getExpired().before(new Date()) || loginTicket.getStatus() != 0) {
+//                return true;
+//            }
+        Integer userId = (Integer)redisConfig.get(ticket);
 
-            TbUser user = userService.selectUserById(loginTicket.getUserId());
+        if( userId!= null){
+
+            TbUser user = userService.selectUserById(userId);
             hostHolder.setUser(user);
         }
         return true;

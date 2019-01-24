@@ -27,7 +27,8 @@ spring:
   redis:
     host: 47.101.47.253
     port: 6379
-    password: root
+    password: P@ssword1991
+
 mybatis:
   config-location: classpath:mybatis/mybatis.cfg.xml    #  mybatis主配置文件所在路径
   mapper-locations: classpath:com/reed/ustc/mapper/*.xml  #  所有的mapper映射文件

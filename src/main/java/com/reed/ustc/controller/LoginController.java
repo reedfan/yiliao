@@ -30,7 +30,7 @@ public class LoginController {
 
     @ApiOperation(value = "跳转到登录界面")
     @GetMapping("/reglogin")
-    public ModelAndView regloginPage(Model model, @RequestParam(value = "next", required = false) String next) {
+    public ModelAndView regloginPage( @RequestParam(value = "next", required = false) String next) {
         ModelAndView modelAndView = new ModelAndView("login");
         modelAndView.addObject("next", next);
         return modelAndView;
